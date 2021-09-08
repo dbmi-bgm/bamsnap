@@ -61,6 +61,7 @@ def print_option(opt):
 
 def set_pos_list(opt):
     ks = opt.keys()
+    exclude_chr = opt['exclude_chr']
     poslist = []
     if ('pos' in ks and len(opt['pos']) > 0):
         for opos in opt['pos']:
@@ -95,30 +96,31 @@ def set_pos_list(opt):
                 p1 = {}
                 p1['chrom'] = arr[0].strip()
                 p1['t_pos'] = int(arr[1])
-                if len(ref) == 1 and len(alt) == 1:
-                    p1['t_spos'] = int(arr[1])
-                    p1['t_epos'] = int(arr[1]) + 1
-                elif len(ref) > len(alt):
-                    p1['t_spos'] = int(arr[1]) + 1
-                    p1['t_epos'] = int(arr[1]) + len(ref)
-                elif len(ref) < len(alt):
-                    p1['t_spos'] = int(arr[1]) + 1
-                    p1['t_epos'] = int(arr[1]) + len(alt)
-                else:
-                    p1['t_spos'] = int(arr[1]) + 1
-                    p1['t_epos'] = int(arr[1]) + len(alt)
+                if p1['chrom'] not in exclude_chr:
+                    if len(ref) == 1 and len(alt) == 1:
+                        p1['t_spos'] = int(arr[1])
+                        p1['t_epos'] = int(arr[1]) + 1
+                    elif len(ref) > len(alt):
+                        p1['t_spos'] = int(arr[1]) + 1
+                        p1['t_epos'] = int(arr[1]) + len(ref)
+                    elif len(ref) < len(alt):
+                        p1['t_spos'] = int(arr[1]) + 1
+                        p1['t_epos'] = int(arr[1]) + len(alt)
+                    else:
+                        p1['t_spos'] = int(arr[1]) + 1
+                        p1['t_epos'] = int(arr[1]) + len(alt)
 
-                p1['g_spos'] = p1['t_spos'] - int(opt['margin'])
-                p1['g_epos'] = p1['t_epos'] + int(opt['margin'])
+                    p1['g_spos'] = p1['t_spos'] - int(opt['margin'])
+                    p1['g_epos'] = p1['t_epos'] + int(opt['margin'])
 
-                if len(arr) >= 3:
-                    p1['id'] = arr[2].strip()
-                if len(arr) >= 4:
-                    p1['ref'] = arr[3].strip()
-                if len(arr) >= 5:
-                    p1['alt'] = arr[4].strip()
+                    if len(arr) >= 3:
+                        p1['id'] = arr[2].strip()
+                    if len(arr) >= 4:
+                        p1['ref'] = arr[3].strip()
+                    if len(arr) >= 5:
+                        p1['alt'] = arr[4].strip()
 
-                poslist.append(p1)
+                    poslist.append(p1)
     if ('bed' in ks and opt['bed'] is not None):
         for line in util.gzopen(opt['bed']):
             if opt['bed'].endswith('.gz'):
