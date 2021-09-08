@@ -19,14 +19,12 @@ extras_require = {
     ]
 }
 
-setup(name='bamsnap',
-      version='0.2.19',
+setup(name='bamsnap-cgap',
+      version='0.3.0',
       url='https://github.com/danielmsk/bamsnap',
       license='MIT',
-      author='Daniel Minseok Kwon',
-      author_email='daniel.minseok.kwon@gmail.com',
+      author='Daniel Minseok Kwon, CGAP team',
       description='A converter from .bam to .png for specific genomic region.',
-      download_url='https://github.com/danielmsk/bamsnap/archive/0.1.tar.gz',
       keywords=['genomics', 'bioinformatics'],
       classifiers=[
           'Operating System :: OS Independent',
